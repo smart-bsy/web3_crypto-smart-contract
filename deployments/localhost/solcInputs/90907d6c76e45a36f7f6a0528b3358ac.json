@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Transactions.sol": {
+      "content": "// SPDX-License-Identifier: SEE LICENSE IN LICENSE\npragma solidity ^0.8.7;\n\ncontract Transactions {\n    struct TransferStruct {\n        address sender;\n        address receiver;\n        uint256 amount;\n        string keyword;\n        string message;\n        uint256 timestamp;\n    }\n\n    TransferStruct[] transactions;\n\n    uint256 private transferCount;\n\n    event Transfer(\n        address sender,\n        address receiver,\n        uint256 amount,\n        string message,\n        uint256 timestamp,\n        string keyword\n    );\n\n    constructor() {}\n\n    function addToBlockChain(\n        address payable receiver,\n        uint256 amount,\n        string memory keyword,\n        string memory message\n    ) public {\n        transferCount++;\n        transactions.push(\n            TransferStruct(\n                msg.sender,\n                receiver,\n                amount,\n                keyword,\n                message,\n                block.timestamp\n            )\n        );\n        emit Transfer(\n            msg.sender,\n            receiver,\n            amount,\n            message,\n            block.timestamp,\n            keyword\n        );\n    }\n\n    function getAllTransactions()\n        public\n        view\n        returns (TransferStruct[] memory)\n    {\n        return transactions;\n    }\n\n    function getTransactionCount() public view returns (uint256) {\n        return transferCount;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
